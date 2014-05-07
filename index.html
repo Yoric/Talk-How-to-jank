@@ -25,9 +25,9 @@
   <header class="caption">
     <h1>How to make your next web application appear janky and clumsy</h1>
     <p class="footer">
-      {David Rajchenbach-Teller}, 
-      {ImYoric <a href="http://twitter.com/">@twitter</a> or 
-      <a href="mailto:you@email.com">dteller@mozilla.com</a>}
+      David Rajchenbach-Teller (Yoric)
+      ImYoric <a href="http://twitter.com/">@twitter</a> or 
+      <a href="mailto:you@email.com">dteller@mozilla.com</a>
     </p>
   </header>
   <aside class="talkdescription">
@@ -64,17 +64,24 @@ from a high-level overview of browser architectures, we will see how we can best
 
 <!-- end slide block -->
 
-  <div id="section:teaser" class="slide oneline"><div>
+  <div id="section:teaser" class="slide cover w"><div>
     <section>
       <header>
-        <h2>So you want to optimize your webapp?</h2>
+        <h2>So you want to go fast?</h2>
       </header>
-      <!-- Demotivational -->
+      <img src="img/wile_e__coyote_and_road_runner_by_fabulousespg-wallpaper.jpg" 
+           class="middle" 
+           alt="Going (too) fast">
+      <small class="credits">
+        <a href="http://hdfons.com/wile-e-coyote-and-the-road-runner/wile_e__coyote_and_road_runner_by_fabulousespg-wallpaper/">
+          Image by Fabulous Wallpapers
+        </a>
+      </small>
       <footer class="notes">
       This talk is not about optimizing your web application. It is about knowing how a browser works, and the weaknesses that will bring any browser to its knees. This is about things that cannot be optimized, no matter how many year·man of work we put in them.
       </footer>
     </section>
-  </div></div>  
+  </div></div>
 
   <div id="teaser:jank" class="slide"><div>
     <section>
@@ -132,15 +139,23 @@ from a high-level overview of browser architectures, we will see how we can best
 
 <!-- FIXME: Nice animation before and after -->
 
-  <div id="section:browser" class="slide shout"><div>
+  <div id="section:browser" class="slide cover w"><div>
     <section>
       <header>
-        <h2>Know thine enemy</h2>
+        <h2>1. Know your enemy</h2>
       </header>
+      <img src="img/Escargot_Anatomie_01_Francais_Snail_Anatomy_French.svg" 
+           class="middle" 
+           alt="A snail">
+      <small class="credits">
+        <a href="http://openclipart.org/detail/46135/escargot-anatomie-avec-descriptions-en-fran%C3%A7ais---snail-anatomy-with-french-labels-by-palomaironique">
+          Image by palomaironique
+        </a>
+      </small>
       <footer class="notes">
       </footer>
     </section>
-  </div></div>  
+  </div></div>
 
 
   <div id="browser:loop" class="slide"><div>
@@ -160,28 +175,37 @@ from a high-level overview of browser architectures, we will see how we can best
       Some people believe that a browser is a piece of software used to load websites. They are wrong, obviously. This is a browser. Incidentally, this is very close to the architecture of a videogame.
       </footer>
     </section>
-  </div></div>  
+  </div></div>
 
-  <div id="section:warmup" class="slide shout"><div>
+  <div id="warmup:howto" class="slide cover h"><div>
     <section>
       <header>
-        <h2>Attack vector #1: Writing code</h2><!-- FIXME: Nice subtitle -->
+        <h2>2. Do too much too often</h2>
       </header>
+      <img src="img/Gerald_G_Busy_Mom.svg" 
+           class="middle" 
+           alt="A busy mom">
+      <small class="credits">
+        <a href="http://openclipart.org/detail/7852/busy-mom-by-gerald_g">
+          Image by Gerald G
+        </a>
+      </small>
       <footer class="notes">
-      Let's start by warming up
+        Attacking `dom.handleEvents()`, v1.
       </footer>
     </section>
-  </div></div>  
+  </div></div>
+
 
   <div id="warmup:requestAnimationFrame" class="slide"><div>
     <section>
       <header>
-        <h2>Running to completion</h2>
+        <h2>Setup</h2>
       </header>
       <pre>
       <code>requestAnimationFrame(function loop() {</code>
       <code>  // ...</code>
-      <code>  // How can we slow down dom.handleEvents()?</code>
+      <code>  // Insert something slow here.</code>
       <code>  // ...</code>
       <code>  requestAnimationFrame(loop);</code>
       <code>});</code>
@@ -212,19 +236,38 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
+  <div id="warmup:mouse" class="slide"><div>
+    <section>
+      <header>
+        <h2>Beyond 60fps... not</h2>
+      </header>
+      <pre>
+      <code>var element = document.getElementById("myDiv");</code>
+      <code> </code>
+      <code>window.addEventListener("mousemove", function(event) {</code>
+      <code>  element.style.left = event.pageX + "px";</code>
+      <code>  element.stlye.top = event.pageY + "py";</code>
+      <code>});</code>
+      </pre>
+      <footer class="notes">
+      With the right combination of mouse, driver and OS, this function is called up to 10,000x per second. Can your DOM scale up?
+      </footer>
+    </section>
+  </div></div>
+
   <div id="warmup:etc" class="slide"><div>
     <section>
       <header>
         <h2>Variants</h2>
       </header>
-      <pre>
-      <code>requestAnimationFrame(function loop() {</code>
-      <code>  synchronousXHR();</code>
-      <code>  alert();</code>code>
-      <code></code>
-      <code>  requestAnimationFrame(loop);</code>
-      <code>});</code>
-      </pre>
+      Instead of a slow loop, what about?
+      <ul>
+      <li>a call to alert()?</li>
+      <li>synchronous I/O?</li>
+      <li>compiling a WebGL shader?</li>
+      <li>allocating memory?</li>
+      <li>thrashing the layout?</li>
+      </ul>
       <footer class="notes">
       A few variants. Exercise: keeping in mind the architecture of the browser described above, how can a browser implement the
       following functions without breaking animations? Answer: it can, barely, but the solution is almost worse than the problem.
@@ -232,73 +275,32 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="warmup:bottom" class="slide oneline"><div>
-    <section>
-      <header>
-        <h2>Strive to do too much in each frame</h2> <!--FIXME: motivational-->
-      </header>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>  
-
 <!-- FIXME: Result -->
 
-  <div id="section:events" class="slide shout"><div>
+  <div id="layout:howto" class="slide cover h"><div>
     <section>
       <header>
-        <h2>Attack vector #2:   events</h2>
+        <h2>3. Layout and Multiply</h2>
       </header>
+      <img src="img/molumen_ussr_calculator.svg" 
+           class="middle shadow frame" 
+           style="background-color:white"
+           alt="ussr calculator">
+      <small class="credits">
+        <a href="http://openclipart.org/people/molumen/molumen_ussr_calculator.svg">
+          Image by molumen
+        </a>
+      </small>
       <footer class="notes">
+      Remember that `layout.update()`? Who said that it appeared only once per loop?
       </footer>
     </section>
-  </div></div>  
-
-  <div id="events:mouse" class="slide"><div>
-    <section>
-      <header>
-        <h2>The mouse is your friend</h2>
-      </header>
-      <pre>
-      <code>var element = document.getElementById("myDiv");</code>
-      <code></code>
-      <code>window.addEventListener("mousemove", function(event) {</code>
-      <code>  element.style.left = event.pageX;</code>
-      <code>  element.stlye.top = event.pageY;</code>
-      <code>});</code>
-      </pre>
-      <footer class="notes">
-      With the right combination of mouse, driver and OS, this function is called up to 10000x per second. Can your DOM scale up?
-      </footer>
-    </section>
-  </div></div>  
-
-  <div id="events:bottom" class="slide oneline"><div>
-    <section>
-      <header>
-        <h2>Multiply events</h2> <!--FIXME: motivational-->
-      </header>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>  
-
-<!-- FIXME: Result -->
-
-  <div id="section:layout" class="slide shout"><div>
-    <section>
-      <header>
-        <h2>Attack vector #3: The loop</h2>
-      </header>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>  
+  </div></div>
 
   <div id="layout:trash" class="slide"><div>
     <section>
       <header>
-        <h2>Layout in events</h2>
+        <h2>Thrashing layout</h2>
       </header>
       <pre>
       <code>var el1 = document.getElementById("div1");</code>
@@ -318,7 +320,120 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="layout:image" class="slide"><div>
+<!-- FIXME: Result -->
+
+  <div id="renderer:howto" class="slide cover h"><div>
+    <section>
+      <header>
+        <h2>4. Enter the mind of the renderer</h2>
+      </header>
+      <img src="img/cinema-penguin.svg" 
+           class="middle shadow frame" 
+           alt="ussr calculator">
+      <small class="credits">
+        <a href="http://openclipart.org/people/Moini/cinema-penguin.svg">
+          Image by Moini
+        </a>
+      </small>
+      <footer class="notes">
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="renderer:scrolling" class="slide"><div>
+    <section>
+      <header>
+        <h2>Reinventing scrolling</h2>
+      </header>
+      <pre>
+      <code>var element = document.getElementById("foo");</code>
+      <code>var i = 0;</code>
+      <code> </code>
+      <code>requestAnimationFrame(function loop() {</code>
+      <code>   element.stype.top = i * 5 + "px";</code>
+      <code> </code>
+      <code>  requestAnimationFrame(loop);</code>
+      <code>});</code>
+      </pre>
+      <footer class="notes">
+      Seen with frameworks.
+      </footer>
+    </section>
+  </div></div>  
+
+  <div id="renderer:z-index" class="slide"><div>
+    <section>
+      <header>
+        <h2>Reinterpreting layers</h2>
+      </header>
+      <pre>
+      <code>&lt;div style="transition:..."&gt;</code>
+      <code>  &lt;span style="z-index:1"&gt;&lt;/span&gt;</code>
+      <code>  &lt;span style="z-index:3"&gt;&lt;/span&gt;</code>
+      <code>&lt;/div&gt;</code>
+      <code>&lt;div style="z-index:2"&gt;&lt;/div&gt;</code>
+      </pre>
+      <footer class="notes">
+      Seen with framework widgets.
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="renderer:repaints" class="slide"><div>
+    <section>
+      <header>
+        <h2>Forcing large repaints</h2>
+      </header>
+      <pre>
+      <code>&lt;div id="el1" style="position:absolute;top:0;left:0"&gt;</code>
+      <code>&lt;/div&gt;</code>
+      <code>&lt;div id="el2" style="margin-left:90%;margin-top:90%"&gt;</code>
+      <code>&lt;/div&gt;</code>
+      <code> </code>
+      <code>el1.textContent = 'foo';</code>
+      <code>el2.textContent = 'bar';</code>
+      </pre>
+      <footer class="notes">
+      The entire screen is repainted. Seen with internationalization libraries.
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="section:io" class="slide cover h"><div>
+    <section>
+      <header>
+        <h2>5. Waiting is an art</h2>
+      </header>
+      <img src="img/Le_Penseur_de_Rodin_à_Saint-Dié.JPG" 
+           class="middle" 
+           alt="Le Penseur">
+      <small class="credits">
+        <a href="http://fr.wikipedia.org/wiki/Le_Penseur">
+          Source Wikipedia
+        </a>
+      </small>
+      <footer class="notes">
+      This talk is not about optimizing your web application. It is about knowing how a browser works, and the weaknesses that will bring any browser to its knees. This is about things that cannot be optimized, no matter how many year·man of work we put in them.
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="io:storage" class="slide"><div>
+    <section>
+      <header>
+        <h2>Synchronous disk I/O</h2>
+      </header>
+      <pre>
+      <code>localStorage.getItem("foo");</code>
+      <code>  // Yes, it's that simple</code>
+      </pre>
+      <footer class="notes">
+      It's even worse in a loop, of course.
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="io:image" class="slide"><div>
     <section>
       <header>
         <h2>I/O in layout</h2>
@@ -340,662 +455,107 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-<!-- FIXME: Result -->
-
-  <div id="section:renderer" class="slide shout"><div>
+  <div id="section:more" class="slide shout"><div>
     <section>
       <header>
-        <h2>Attack vector #4: The renderer</h2>
+        <h2>Want some more?</h2>
       </header>
       <footer class="notes">
       </footer>
     </section>
   </div></div>  
 
-  <div id="renderer:scrolling" class="slide"><div>
+  <div id="more:etc" class="slide"><div>
     <section>
       <header>
-        <h2>Reinventing scrolling</h2>
+        <h2>More</h2>
+      </header>
+      <ul>
+      <li>creating complex trees;</li>
+      <li>leaving DOM garbage forever (and ever);</li>
+      <li>etc.</li>
+      </ul>
+      <footer class="notes">
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="section:async" class="slide shout"><div>
+    <section>
+      <header>
+        <h2>The Future is Coming</h2><!-- FIXME: Motivational -->
+      </header>
+      <footer class="notes">
+      </footer>
+    </section>
+  </div></div>  
+
+  <div id="async:main" class="slide"><div>
+    <section>
+      <header>
+        <h2>Ideal main thread</h2>
       </header>
       <pre>
-      <code>var element = document.getElementById("foo");</code>
-      <code>var i = 0;</code>
-      <code> </code>
-      <code>requestAnimationFrame(function loop() {</code>
-      <code>   element.stype.top = i * 5 + "px";</code>
-      <code> </code>
-      <code>  requestAnimationFrame(loop);</code>
-      <code>});</code>
+      <code>myElement.addEventListener("click", e => {</code>
+      <code>  var msg = {</code>
+      <code>    id: myElement.id,</code>
+      <code>    event: "click",</code>
+      <code>    buttons: e.buttons</code>
+      <code>  };</code>
+      <code>  myWorker.postMessage(msg);</code>
+      <code>);</code>
       </pre>
       <footer class="notes">
+      Let's assume for a moment that this works. Death by DOM messages. Death by postMessage.
       </footer>
     </section>
   </div></div>  
 
-  <div id="renderer:z-index" class="slide"><div>
+  <div id="async:worker" class="slide"><div>
     <section>
       <header>
-        <h2>Messing with layers</h2>
+        <h2>...Companion worker</h2>
       </header>
       <pre>
-      <code>&lt;div style="transition:..."&gt;</code>
-      <code>  &lt;span style="z-index:1"&gt;&lt;/span&gt;</code>
-      <code>  &lt;span style="z-index:3"&gt;&lt;/span&gt;</code>
-      <code>&lt;/div&gt;</code>
-      <code>&lt;div style="z-index:2"&gt;&lt;/div&gt;</code>
+      <code>self.addEventListener("message", {data} => {</code>
+      <code>  // ... </code>
+      <code>  var msg = // ...</code>
+      <code>  self.postMessage(msg); </code>
+      <code>);</code>
       </pre>
       <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="renderer:repaints" class="slide"><div>
-    <section>
-      <header>
-        <h2>Forcing repaints</h2>
-      </header>
-      <pre>
-      <code>&lt;div id="el1" style="position:absolute;top:0;left:0"&gt;</code>
-      <code>&lt;/div&gt;</code>
-      <code>&lt;div id="el2" style="position:absolute;bottom:0;right:0"&gt;</code>
-      <code>&lt;/div&gt;</code>
-      <code>
-      
-      </code>
-      </pre>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="callout" class="slide"><div>
-    <section>
-      <header>
-        <h2>The renderer believes you</h2>
-      </header>
-      <p>The following are callout slide styles – either a large word, or a one sentence headline. Use them to chunk your presentation into logical units.</p>
-      <footer class="notes">
+      And if the back messages are too long, another death by postMessage.
       </footer>
     </section>
   </div></div>  
 
-
-  <div id="callout" class="slide"><div>
+  <div id="section:conclusions" class="slide oneline"><div>
     <section>
       <header>
-        <h2>Callout slide styles</h2>
-      </header>
-      <p>The following are callout slide styles – either a large word, or a one sentence headline. Use them to chunk your presentation into logical units.</p>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>  
-
-  <div id="shout" class="slide shout"><div>
-    <section>
-      <header>
-        <h2>Shout slide</h2>
+        <h2>Where do we get from here?</h2>
       </header>
       <footer class="notes">
       </footer>
     </section>
   </div></div>  
 
-  <div id="oneline" class="slide oneline"><div>
+  <div id="conclusions" class="slide"><div>
     <section>
       <header>
-        <h2><strong>Imagine</strong>: One line slide</h2>
+        <h2>How to jank</h2>
       </header>
+      <ul>
+      <li>Know the browser</li>
+      <li>Understand how to abuse the model</li>
+      <li>Use a framework that does so</li>
+      <li>Understand the limitations of the model</li>
+      <li>Many frameworks will do the (bad) work for you</li>
+      <li>Discuss with browser developers!</li>
+      </ul>
       <footer class="notes">
       </footer>
     </section>
   </div></div>  
-
-  <div id="imagesinfo" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide styles</h2>
-      </header>
-      <ul>
-        <li>Images are either backgrounds or part of the page.</li>
-        <li>Background images need a "cover" class on on the slide DIV.</li>
-        <li>In-page images need a class of "middle" to get centered</li>
-        <li>Adding "left" or "right" classes floats the image and you can use text next to them</li>
-        <li>Adding a "shadow" class adds a drop-shadow.</li>
-        <li>FIGURE elements around the image allow for a "swinging frame" effect</li>
-        <li>Images can also be videos or SVG. :)</li>
-      </ul>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imageh" class="slide cover w"><div>
-    <section>
-      <header>
-        <h2>Image slide (stretched horizontal)</h2>
-      </header>
-      <img src="pictures/templatedemos/phones.jpg" 
-           class="middle" 
-           alt="Firefox OS phones">
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imagev" class="slide cover h"><div>
-    <section>
-      <header>
-        <h2>Image slide (stretched vertical)</h2>
-      </header>
-      <img src="pictures/templatedemos/phones.jpg" 
-           class="middle" 
-           alt="Firefox OS phones">
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-        Introduce yourself, who you are and why you are the person to give that talk
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imagemiddle" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (centered, resized)</h2>
-      </header>
-      <img src="pictures/templatedemos/smallphones.jpg" 
-           class="middle"
-           alt="Firefox OS phones">
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-        Introduce yourself, who you are and why you are the person to give that talk
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imageright" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (right)</h2>
-      </header>
-      <img src="pictures/templatedemos/smallphones.jpg" 
-           class="right" 
-           alt="Firefox OS phones">
-
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-      </ul>     
-
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-        Introduce yourself, who you are and why you are the person to give that talk
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imageleft" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (left)</h2>
-      </header>
-      <img src="pictures/templatedemos/smallphones.jpg" 
-           class="left" 
-           alt="Firefox OS phones">
-
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-      </ul>     
-
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imageshadow" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (centered, shadow)</h2>
-      </header>
-      <img src="pictures/templatedemos/smallphones.jpg" 
-           class="middle shadow"
-           alt="Firefox OS phones">
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imageframe" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (framed)</h2>
-      </header>
-      <figure class="middle shadow frame">
-      <img src="pictures/templatedemos/smallphones.jpg" 
-           alt="Firefox OS phones">
-      </figure>     
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imageswing" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (framed, swinging)</h2>
-      </header>
-      <figure class="middle shadow frame swing">
-      <img src="pictures/templatedemos/smallphones.jpg" 
-           alt="Firefox OS phones">
-      </figure>     
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="imagegif" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (GIF)</h2>
-      </header>
-      <img src="pictures/templatedemos/earthphases.gif" 
-           alt="Earthphases" class="right" width="300">
-      <p>GIFs animate from the start when the slide shows.</p>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="videoswing" class="slide"><div>
-    <section>
-      <header>
-        <h2>Image slide (video)</h2>
-      </header>
-      <video controls class="middle shadow">
-        <source src="pictures/templatedemos/wave.mp4" type="video/mp4"></source>
-        <source src="pictures/templatedemos/wave.webm" type="video/webm"></source>
-      </video>
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="videoautoplay" class="slide autoplay"><div>
-    <section>
-      <header>
-        <h2>Image slide (video autoplay)</h2>
-      </header>
-      <video controls class="middle shadow">
-        <source src="pictures/templatedemos/wave.mp4" type="video/mp4"></source>
-        <source src="pictures/templatedemos/wave.webm" type="video/webm"></source>
-      </video>
-      <small class="credits">
-        <a href="http://www.flickr.com/photos/codepo8/9506545800/">
-          Image by Chris Heilmann
-        </a>
-      </small>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-
-  <div id="listtypes" class="slide"><div>
-    <section>
-      <header>
-        <h2>List style types</h2>
-      </header>
-      <p>The following are the different kinds of list styles available to you. <strong>Always remember that bullets kill</strong> – both people and audiences. If people can read ahead of your narrative, they will. And you made yourself redundant as a speaker.</p>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="numbered" class="slide"><div>
-    <section>
-      <header>
-        <h2>Numbered list</h2>
-      </header>
-      <ol>
-        <li>Collect underpants</li>
-        <li>???</li>
-        <li>Profit</li>
-      </ol>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
- <div id="list" class="slide"><div>
-    <section>
-      <header>
-        <h2>Unordered List</h2>
-      </header>
-      <ul>
-        <li>Tigers</li>
-        <li>Elephants</li>
-        <li>Bears
-          <ul>
-            <li>Koalas</li>
-            <li>Polar</li>
-            <li>Panda</li>
-          </ul>
-        </li>
-        <li>Oh my&hellip;</li>
-      </ul>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
- <div id="orderedlist" class="slide"><div>
-    <section>
-      <header>
-        <h2>Ordered List</h2>
-      </header>
-      <ol>
-        <li>Tigers</li>
-        <li>Elephants</li>
-        <li>Bears
-          <ol>
-            <li>Koalas</li>
-            <li>Polar</li>
-            <li>Panda</li>
-          </ol>
-        </li>
-        <li>Oh my&hellip;</li>
-      </ol>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
- <div id="longlist" class="slide"><div>
-    <section>
-      <header>
-        <h2>Long List</h2>
-      </header>
-      <ol class="longlist">
-        <li>Tigers</li>
-        <li>Elephants</li>
-        <li>Bears
-          <ol>
-            <li>Koalas</li>
-            <li>Polar</li>
-            <li>Panda</li>
-          </ol>
-        </li>
-        <li>Hedgehogs</li>
-        <li>Opossums</li>
-        <li>Hyrax</li>
-        <li>Capybara</li>
-        <li>Oh my&hellip;</li>
-      </ol>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
- <div id="inlinelist" class="slide"><div>
-    <section>
-      <header>
-        <h2>Inline List</h2>
-      </header>
-      <ul class="inline">
-        <li>Tigers</li>
-        <li>Elephants</li>
-        <li>Bears</li>
-        <li>Hedgehogs</li>
-        <li>Opossums</li>
-        <li>Hyrax</li>
-        <li>Capybara</li>
-        <li>Oh my&hellip;</li>
-      </ul>
-      <footer class="notes">moo
-      </footer>
-    </section>
- </div></div>
-
- <div id="animatedlist" class="slide"><div>
-    <section>
-      <header>
-        <h2>Animated List</h2>
-      </header>
-      <ul class="inner">
-        <li class="active">Tigers</li>
-        <li>Elephants</li>
-        <li>Bears</li>
-        <li>Hedgehogs</li>
-        <li>Opossums</li>
-        <li>Hyrax</li>
-        <li>Capybara</li>
-        <li>Oh my&hellip;</li>
-      </ul>
-      <footer class="notes">
-      </footer>
-    </section>
- </div></div>
-
-  <div id="onelinelist" class="slide"><div>
-    <section>
-      <header>
-        <h2>One line list</h2>
-      </header>
-      <ul class="oneline">
-        <li>Elephants</li>
-        <li>Aardvarks</li>
-        <li>Hedgehogs</li>
-        <li>Kittens</li>
-        <li>Puppies</li>
-      </ul>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="reallylonglist" class="slide"><div>
-    <section>
-      <header>
-        <h2>Long list</h2>
-      </header>
-      <ul class="lots">
-        <li>Elephants</li>
-        <li>Aardvarks</li>
-        <li>Hedgehogs</li>
-        <li>Kittens</li>
-        <li>Puppies</li>
-        <li>Axolotls</li>
-        <li>Elephants</li>
-        <li>Aardvarks</li>
-        <li>Hedgehogs</li>
-        <li>Kittens</li>
-        <li>Puppies</li>
-        <li>Axolotls</li>
-        <li>Elephants</li>
-        <li>Aardvarks</li>
-        <li>Hedgehogs</li>
-        <li>Kittens</li>
-        <li>Puppies</li>
-        <li>Axolotls</li>
-        <li>Elephants</li>
-        <li>Aardvarks</li>
-        <li>Hedgehogs</li>
-        <li>Kittens</li>
-        <li>Puppies</li>
-        <li>Axolotls</li>
-        <li>Elephants</li>
-        <li>Aardvarks</li>
-        <li>Hedgehogs</li>
-        <li>Kittens</li>
-        <li>Puppies</li>
-        <li>Axolotls</li>
-      </ul>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="codestyles" class="slide"><div>
-    <section>
-      <header>
-        <h2>Code styles</h2>
-      </header>
-      <p>Code is not automatically encoded and colour coded. The space you have for code is also limited. This is by design: <strong>presentations are not there to drench audiences with code</strong>. Switch to your editor if needed and link to live, maintained code so people don't copy+paste.</p>
-      <footer class="notes">
-      </footer> 
-    </section>
-  </div></div>
-
-   <div id="codedemo" class="slide"><div>
-    <section>
-      <header>
-        <h2>code</h2>
-      </header>
-        <pre>
-        <code>var installapp = navigator.mozApps.install(manifestURL);</code>
-        <code>installapp.<mark>onsuccess</mark> = function(data) {</code>
-        <code>  // App is installed</code>
-        <code>};</code>
-        <code>installapp.<mark class="important">onerror</mark> = function() {</code>
-        <code> // App wasn't installed, info is in </code>
-        <code> // installapp.error.name</code>
-        <code>};</code>
-        </pre>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-   <div id="markupdemo" class="slide"><div>
-    <section>
-      <header>
-        <h2>Markup is encoded</h2>
-      </header>
-        <pre>
-        <code><p>Paragraph without encode</p></code>
-        <code>&lt;p&gt;Paragraph without encode&lt;/p&gt;</code>
-        <code><!-- for backwards compatibility --></code>
-        </pre>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="livecode" class="slide"><div>
-    <section>
-      <header>
-        <h2>Live CSS code</h2>
-      </header>
-      <div id="demodiv"></div>
-<style contenteditable>#demodiv {
-  width: 200px;
-  height: 200px;
-  background: green;
-}</style>
-    <footer class="notes">
-    </footer>
-    </section>
-  </div></div>
-
-  <div id="smoothlivecode" class="slide"><div>
-    <section>
-      <header>
-        <h2>Live CSS code (smooth)</h2>
-      </header>
-      <div id="demodiv2" class="smoothdemo"></div>
-<style contenteditable>#demodiv2 {
-  width: 200px;
-  height: 200px;
-  background: green;
-}</style>
-    <footer class="notes">
-    </footer>
-    </section>
-  </div></div>
-
-  <div id="quotes" class="slide"><div>
-    <section>
-      <header>
-        <h2>Quote styles</h2>
-      </header>
-      <p>Quotes are a superb way to look clever and get more kudos for being in the know. Make sure you attribute them correctly and do not quote out of context.</p>
-      <footer class="notes">
-      </footer> 
-    </section>
-  </div></div>
-
-  <div id="simplequote" class="slide"><div>
-    <section>
-      <header>
-        <h2>Quote</h2>
-      </header>
-      <blockquote>
-        <p>The worst part of internet quotes is that you can never be sure that they are attributed correctly.</p>
-        <p class="byline">Benjamin Franklin</p>
-      </blockquote>
-      <footer class="notes">
-      </footer> 
-    </section>
-  </div></div>
-
-  <div id="longquote" class="slide"><div>
-    <section>
-      <header>
-        <h2>Long quote is long&hellip;</h2>
-      </header>
-      <blockquote class="lots">
-        But there's no doubt that, we went for this approach, <mark>we built this internal framework that we called Faceweb</mark>, which is basically this idea that we can take the infrastructure that we built out for pushing code everyday, not having to submit to an app store, building web code on the web stack that we have, and that we can translate that into mobile development. <mark>We just were never able to get the quality of it we wanted</mark>&hellip;
-      </blockquote>
-    <footer class="notes">
-      It seems the main failure was Facebook's approach and internal system creating HTML5 apps - not the technology itself.
-    </footer>
-    </section>
-  </div></div>
 
   <div id="thanks" class="slide"><div>
     <section>
@@ -1004,10 +564,10 @@ from a high-level overview of browser architectures, we will see how we can best
       </header>
       <img src="pictures/mozillaoverview/redpanda.jpg" class="right" alt="Red panda (Firefox)">
       <ul class="nobull">
-        <li>{name}</li>
-        <li>{title}</li>
+        <li>David Rajchenbach-Teller (Yoric)</li>
+        <li>Mozilla, Performance Team</li>
         <li>{<a href="http://twitter.com/">@twitter</a>}</li>
-        <li><strong>Slides</strong>: {slideurl}</li>
+        <li><strong>Slides</strong>: https://github.com/Yoric/Talk-How-to-jank</li>
       </ul>
       <small class="credits">
         <a href="http://www.flickr.com/photos/yortw/5798336827/">Photo by Yortw</a>
@@ -1018,6 +578,9 @@ from a high-level overview of browser architectures, we will see how we can best
 
     </section>
   </div></div>
+
+
+
 
   <!--
     To hide progress bar from entire presentation

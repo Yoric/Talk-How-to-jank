@@ -89,8 +89,10 @@ from a high-level overview of browser architectures, we will see how we can best
       <header>
         <h2>About jank</h2>
       </header>
-      <table style="border-spacing:5px">
-        <tr>
+      <canvas id="canvas" class="middle" style="z-index:-10">
+      </canvas>
+      <table class="highlight-row" style="border-spacing:5px;float:left">
+        <tr id="row-smooth">
           <td>
           16ms- (sustained) &nbsp;&nbsp;&nbsp;&nbsp;
           </td>
@@ -98,7 +100,7 @@ from a high-level overview of browser architectures, we will see how we can best
           Smooth
           </td>
         </tr>
-        <tr>
+        <tr id="row-choppy">
           <td>
           40ms+ (sustained)
           </td>
@@ -106,7 +108,7 @@ from a high-level overview of browser architectures, we will see how we can best
           Choppy
           </td>
         </tr>
-        <tr>
+        <tr id="row-jank">
           <td>
           50ms+ (single)
           </td>
@@ -114,7 +116,7 @@ from a high-level overview of browser architectures, we will see how we can best
           Jank
           </td>
         </tr>
-        <tr>
+        <tr id="row-broken" style="transition:none">
           <td>
           100ms+ (single)
           </td>
@@ -122,7 +124,7 @@ from a high-level overview of browser architectures, we will see how we can best
           Broken
           </td>
         </tr>
-        <tr>
+        <tr id="row-stopped">
           <td>
           10s+ (single)
           </td>
@@ -130,7 +132,6 @@ from a high-level overview of browser architectures, we will see how we can best
           Stopped responding
           </td>
         </tr>
-
       </table>
       <footer class="notes">
       This talk is not about optimizing your web application. It is about knowing how a browser works, and the weaknesses that will bring any browser to its knees. This is about things that cannot be optimized, no matter how many year·man of work we put in them.
@@ -252,6 +253,7 @@ from a high-level overview of browser architectures, we will see how we can best
       </pre>
       <footer class="notes">
       With the right combination of mouse, driver and OS, this function is called up to 10,000x per second. Can your DOM scale up?
+      Same thing with resizing.
       </footer>
     </section>
   </div></div>
@@ -490,9 +492,9 @@ from a high-level overview of browser architectures, we will see how we can best
         <h2>More</h2>
       </header>
       <ul>
-      <li>abusing the network;</li>
+      <li>multiplying requests;</li>
       <li>waiting too long;</li>
-      <li>hoarding resources;</li>
+      <li>hoarding resources (nodes, frames, strings, data);</li>
       <li>etc.</li>
       </ul>
       <footer class="notes">
@@ -517,7 +519,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="async:list" class="slide"><div>
+  <div id="async_list" class="slide"><div>
     <section>
       <header>
         <h2>The future</h2>
@@ -534,7 +536,7 @@ from a high-level overview of browser architectures, we will see how we can best
   </div></div>
 
 
-  <div id="async:main" class="slide"><div>
+  <div id="async_main" class="slide"><div>
     <section>
       <header>
         <h2>Ideal main thread</h2>
@@ -555,7 +557,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>  
 
-  <div id="async:worker" class="slide"><div>
+  <div id="async_worker" class="slide"><div>
     <section>
       <header>
         <h2>...Companion worker</h2>
@@ -596,6 +598,7 @@ from a high-level overview of browser architectures, we will see how we can best
       </header>
       <ol class="inner">
       <li class="active">Know the browser.</li>
+      <li class="active">Force synchronous operations.</li>
       <li class="active">Understand how to (ab)use the model.</li>
       <li class="active">Many frameworks will do jank for you.</li>
       <li class="active">Maximize jank by carefully monitoring the profiler, the timeline, the box repainter.</li>      
@@ -616,7 +619,7 @@ from a high-level overview of browser architectures, we will see how we can best
         <li>David Rajchenbach-Teller (Yoric)</li>
         <li>Mozilla, Performance Team</li>
         <li>ImYoric <a href="http://twitter.com/">@twitter</a></li>
-        <li><strong>Slides</strong>: https://github.com/Yoric/Talk-How-to-jank</li>
+        <li><strong>Slides</strong>: http://yoric.github.io/Talk-How-to-jank/</li>
       </ul>
       <small class="credits">
         <a href="http://www.flickr.com/photos/yortw/5798336827/">Photo by Yortw</a>
@@ -636,7 +639,9 @@ from a high-level overview of browser architectures, we will see how we can best
     just remove “progress” element.
     -->
   <div class="progress"><div></div></div>
-  <script src="scripts/script.js"></script>
+  <script src="scripts/script.js" defer="true"></script>
+  <script src="scripts/anim.js" defer="true"></script>
+
   <!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
 </body>
 </html>

@@ -10,9 +10,16 @@
   <font id="EmbeddedFont_1" horiz-adv-x="2048">
    <font-face font-family="AppleGothic embedded" units-per-em="2048" font-weight="bold" font-style="normal" ascent="1821" descent="674"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
+   <glyph unicode="W" horiz-adv-x="2047" d="M 1909,1606 L 2068,1606 1597,0 1442,0 1044,1399 662,0 506,0 23,1606 190,1606 586,240 965,1606 1120,1606 1520,240 Z"/>
+   <glyph unicode="S" horiz-adv-x="1102" d="M 1094,1493 L 1094,1286 C 1058,1316 1022,1343 986,1366 950,1389 914,1408 879,1423 797,1462 713,1481 629,1481 522,1481 434,1454 365,1401 294,1346 258,1281 258,1206 258,1097 339,1015 500,961 575,935 650,910 724,886 798,862 874,838 950,813 1113,735 1194,619 1194,465 1194,315 1136,194 1020,102 909,16 772,-27 608,-27 499,-27 394,-5 293,37 234,60 165,98 84,152 L 84,360 C 189,266 296,200 403,162 439,148 474,139 508,133 542,128 576,125 610,125 720,125 812,152 887,207 970,267 1012,345 1012,442 1012,560 933,649 774,711 698,734 623,758 549,782 475,807 401,831 328,854 168,928 88,1041 88,1194 88,1322 139,1427 240,1507 343,1591 473,1632 629,1632 724,1632 820,1615 915,1579 965,1563 1024,1534 1094,1493 Z"/>
+   <glyph unicode="O" horiz-adv-x="1417" d="M 799,-27 C 613,-27 451,46 311,190 158,347 82,550 82,799 82,1036 154,1237 297,1401 436,1555 601,1632 793,1632 986,1632 1153,1556 1292,1405 1436,1245 1507,1044 1507,801 1507,548 1430,343 1274,186 1136,44 978,-27 799,-27 Z M 786,125 C 938,125 1067,188 1174,315 1281,445 1335,607 1335,801 1335,895 1322,982 1296,1063 1270,1143 1232,1217 1180,1282 1076,1414 948,1481 795,1481 643,1481 515,1414 410,1282 306,1152 254,991 254,797 254,595 309,430 418,303 520,184 643,125 786,125 Z"/>
    <glyph unicode="N" horiz-adv-x="1283" d="M 102,0 L 102,1606 250,1606 1237,246 1237,1606 1384,1606 1384,0 1237,0 250,1358 250,0 Z"/>
+   <glyph unicode="L" horiz-adv-x="945" d="M 106,1606 L 268,1606 268,141 1061,141 1061,0 106,0 Z"/>
    <glyph unicode="K" horiz-adv-x="1215" d="M 86,1606 L 248,1606 248,803 1032,1606 1247,1606 618,973 1294,0 1083,0 489,850 248,608 248,0 86,0 Z"/>
    <glyph unicode="J" horiz-adv-x="923" d="M 498,137 C 585,137 659,164 721,217 784,273 815,339 815,414 L 815,1606 975,1606 975,408 C 975,300 927,202 831,115 737,29 629,-14 508,-14 419,-14 326,3 227,39 204,46 178,56 150,71 121,85 89,102 53,121 L 53,307 C 89,284 123,263 157,244 190,225 224,208 258,193 344,156 424,137 498,137 Z"/>
+   <glyph unicode="H" horiz-adv-x="1193" d="M 113,1606 L 272,1606 272,905 1155,905 1155,1606 1315,1606 1315,0 1155,0 1155,770 272,770 272,0 113,0 Z"/>
+   <glyph unicode="E" horiz-adv-x="1012" d="M 90,1608 L 1090,1608 1090,1466 252,1466 252,911 1059,911 1059,770 252,770 252,141 1096,141 1096,0 90,0 Z"/>
+   <glyph unicode="D" horiz-adv-x="1193" d="M 115,1608 L 500,1608 C 642,1608 760,1590 856,1554 896,1539 933,1521 969,1498 1004,1476 1038,1449 1069,1417 1144,1342 1201,1252 1241,1147 1281,1042 1300,932 1300,817 1300,562 1227,361 1081,215 934,72 732,0 475,0 L 115,0 Z M 436,1466 L 276,1466 276,141 541,141 C 695,141 825,195 932,301 1056,425 1118,598 1118,819 1118,863 1116,904 1111,942 1106,980 1099,1017 1090,1053 1059,1156 1006,1245 930,1319 874,1372 809,1410 735,1434 664,1455 565,1466 436,1466 Z"/>
    <glyph unicode="A" horiz-adv-x="1372" d="M 668,1606 L 825,1606 1423,0 1235,0 1042,549 432,549 231,0 53,0 Z M 997,690 L 750,1413 481,690 Z"/>
   </font>
  </defs>
@@ -62,12 +69,12 @@
      <g class="com.sun.star.drawing.CustomShape">
       <g id="id3">
        <path fill="rgb(255,255,102)" stroke="none" d="M 15407,18695 L 10241,23860 -1,13618 10331,3286 20573,13529 15407,18695 Z"/>
-       <path fill="none" stroke="rgb(0,0,0)" d="M 15407,18695 L 10241,23860 -1,13618 10331,3286 20573,13529 15407,18695 Z"/>
+       <path fill="none" stroke="rgb(0,0,0)" stroke-width="254" stroke-linejoin="round" stroke-linecap="round" d="M 15407,18695 L 10241,23860 -1,13618 10331,3286 20573,13529 15407,18695 Z"/>
       </g>
      </g>
      <g class="com.sun.star.drawing.TextShape">
       <g id="id4">
-       <text class="TextShape"><tspan class="TextParagraph" font-family="AppleGothic, sans-serif" font-size="4233px" font-weight="700"><tspan class="TextPosition" x="4425" y="14803"><tspan fill="rgb(0,0,0)" stroke="none">JANK</tspan></tspan></tspan></text>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="AppleGothic, sans-serif" font-size="2117px" font-weight="700"><tspan class="TextPosition" x="7300" y="10230"><tspan fill="rgb(0,0,0)" stroke="none">SLOW</tspan></tspan></tspan><tspan class="TextParagraph" font-family="AppleGothic, sans-serif" font-size="2117px" font-weight="700"><tspan class="TextPosition" x="7060" y="12808"><tspan fill="rgb(0,0,0)" stroke="none">DOWN</tspan></tspan></tspan><tspan class="TextParagraph" font-family="AppleGothic, sans-serif" font-size="2117px" font-weight="700"><tspan class="TextPosition" x="7674" y="15386"><tspan fill="rgb(0,0,0)" stroke="none">JANK</tspan></tspan></tspan><tspan class="TextParagraph" font-family="AppleGothic, sans-serif" font-size="2117px" font-weight="700"><tspan class="TextPosition" x="6838" y="17964"><tspan fill="rgb(0,0,0)" stroke="none">AHEAD</tspan></tspan></tspan></text>
       </g>
      </g>
      <g class="com.sun.star.drawing.CustomShape">

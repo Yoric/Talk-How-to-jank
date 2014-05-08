@@ -753,3 +753,12 @@ table {
   50%  { transform: rotate(3deg) translate(-50%, -50%); }
   100% { transform: rotate(-3deg) translate(-50%, -50%); }
 }
+
+/* Tables */
+.highlight-row tr {
+	transition: 1s;
+}
+.highlight-row tr:hover {
+	background-color:#C0C0B9;
+
+}

@@ -47,15 +47,16 @@ from a high-level overview of browser architectures, we will see how we can best
 
   <div id="cover" class="slide"><div>
     <section>
-      <header>
-        <h2>How to jank</h2>
-      </header>
-      <img src="pictures/templatedemos/high-five.jpg" 
-           class="middle shadow" height="400"
-           alt="High-five at the Mozilla Festival!">
-      <small class="byline">
-        David Rajchenbach-Teller (Yoric), Zedge Tech Talks, Trondheim, May 8th, 2014
-      </small>
+      <img src="img/jank.svg" 
+           class="left" style="width:50%"
+           alt="Slow down">
+        <ul class="nobull" style="margin-top:20%">
+        <li>David Rajchenbach-Teller</li>
+        <li>Mozilla</li>
+        <li>Firefox Performance Team</li>
+        <li>Zedge Tech Talks</li>
+        <li>Trondheim, May 8th, 2014</li>
+        </ul>
       <footer class="notes">
       My name is David Rajchenbach-Teller (or Yoric). I am not a webdev.
       </footer>
@@ -64,7 +65,7 @@ from a high-level overview of browser architectures, we will see how we can best
 
 <!-- end slide block -->
 
-  <div id="section:teaser" class="slide cover w"><div>
+  <div id="section_teaser" class="slide cover w"><div>
     <section>
       <header>
         <h2>So you want to go fast?</h2>
@@ -255,16 +256,17 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="warmup:etc" class="slide"><div>
+  <div id="warmupetc" class="slide"><div>
     <section>
       <header>
         <h2>Variants</h2>
       </header>
-      Instead of a slow loop, what about?
-      <ul>
-      <li>a call to alert()?</li>
-      <li>synchronous I/O?</li>
-      <li>compiling a WebGL shader?</li>
+      What else can slow down the loop?
+      <ul class="inner">
+      <li class="active">a call to alert()?</li>
+      <li>synchronous network I/O?</li>
+      <li>synchronous disk I/O?</li>
+      <li>synchronous GPU I/O?</li>
       <li>allocating memory?</li>
       <li>thrashing the layout?</li>
       </ul>
@@ -439,7 +441,8 @@ from a high-level overview of browser architectures, we will see how we can best
         <h2>I/O in layout</h2>
       </header>
       <pre>
-      <code>var context = document.getElementById("canvas").getContext("2d");</code>
+      <code>var context = document.getElementById("canvas").</code>
+      <code>   getContext("2d");</code>
       <code> </code>
       <code>requestAnimationFrame(function loop() {</code>
       <code>   var image = new Image();</code>
@@ -455,24 +458,31 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="section:more" class="slide shout"><div>
+  <div id="section:more" class="slide cover h"><div>
     <section>
       <header>
-        <h2>Want some more?</h2>
+        <h2>6. Want some more?</h2>
       </header>
-      <footer class="notes">
-      </footer>
+      <img src="img/Caution_banana_skin.svg" 
+           class="middle" 
+           alt="Banana Skin">
+      <small class="credits">
+        <a href="http://openclipart.org/detail/92407/warning-banana-skin-by-cybergedeon">
+          Author dominiquechappard
+        </a>
+      </small>
     </section>
-  </div></div>  
+  </div></div>
 
-  <div id="more:etc" class="slide"><div>
+  <div id="more" class="slide"><div>
     <section>
       <header>
         <h2>More</h2>
       </header>
       <ul>
-      <li>creating complex trees;</li>
-      <li>leaving DOM garbage forever (and ever);</li>
+      <li>abusing the network;</li>
+      <li>waiting too long;</li>
+      <li>hoarding resources;</li>
       <li>etc.</li>
       </ul>
       <footer class="notes">
@@ -480,15 +490,39 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="section:async" class="slide shout"><div>
+  <div id="section:future" class="slide cover h"><div>
     <section>
       <header>
-        <h2>The Future is Coming</h2><!-- FIXME: Motivational -->
+        <h2>7. The Future is Coming</h2>
       </header>
+      <img src="img/centaur.svg" 
+           class="middle" 
+           style="height:80%;margin-top:10%"
+           alt="A Centaur">
+      <small class="credits">
+        <a href="http://openclipart.org/people/tzunghaor/centaur2.svg">
+          Image by tzunghaor
+        </a>
+      </small>
+    </section>
+  </div></div>
+
+  <div id="async:list" class="slide"><div>
+    <section>
+      <header>
+        <h2>The future</h2>
+      </header>
+      <ul>
+      <li>Promise + Generators;</li>
+      <li>Workers for all;</li>
+      <li>Sandboxed iframes for all;</li>
+      <li>etc.</li>
+      </ul>
       <footer class="notes">
       </footer>
     </section>
-  </div></div>  
+  </div></div>
+
 
   <div id="async:main" class="slide"><div>
     <section>
@@ -496,17 +530,17 @@ from a high-level overview of browser architectures, we will see how we can best
         <h2>Ideal main thread</h2>
       </header>
       <pre>
-      <code>myElement.addEventListener("click", e => {</code>
+      <code>myElement.addEventListener("mousemove", e => {</code>
       <code>  var msg = {</code>
       <code>    id: myElement.id,</code>
-      <code>    event: "click",</code>
+      <code>    event: "mousemove",</code>
       <code>    buttons: e.buttons</code>
       <code>  };</code>
       <code>  myWorker.postMessage(msg);</code>
       <code>);</code>
       </pre>
       <footer class="notes">
-      Let's assume for a moment that this works. Death by DOM messages. Death by postMessage.
+      Let's assume for a moment that this works. Replace a worker with a out-of-process iframe as needed. Death by DOM messages. Death by postMessage.
       </footer>
     </section>
   </div></div>  
@@ -529,15 +563,21 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>  
 
-  <div id="section:conclusions" class="slide oneline"><div>
+  <div id="section:conclusions" class="slide cover h"><div>
     <section>
       <header>
-        <h2>Where do we get from here?</h2>
+        <h2>Where do we go from here?</h2>
       </header>
-      <footer class="notes">
-      </footer>
+      <img src="img/roboter.svg" 
+           class="middle" 
+           alt="A robot">
+      <small class="credits">
+        <a href="http://openclipart.org/detail/166359/roboter-by-bastiyxc">
+          Image by bastiyxc
+        </a>
+      </small>
     </section>
-  </div></div>  
+  </div></div>
 
   <div id="conclusions" class="slide"><div>
     <section>
@@ -547,8 +587,6 @@ from a high-level overview of browser architectures, we will see how we can best
       <ul>
       <li>Know the browser</li>
       <li>Understand how to abuse the model</li>
-      <li>Use a framework that does so</li>
-      <li>Understand the limitations of the model</li>
       <li>Many frameworks will do the (bad) work for you</li>
       <li>Discuss with browser developers!</li>
       </ul>
@@ -566,7 +604,7 @@ from a high-level overview of browser architectures, we will see how we can best
       <ul class="nobull">
         <li>David Rajchenbach-Teller (Yoric)</li>
         <li>Mozilla, Performance Team</li>
-        <li>{<a href="http://twitter.com/">@twitter</a>}</li>
+        <li>ImYoric <a href="http://twitter.com/">@twitter</a></li>
         <li><strong>Slides</strong>: https://github.com/Yoric/Talk-How-to-jank</li>
       </ul>
       <small class="credits">

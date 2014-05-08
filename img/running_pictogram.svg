@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg2" viewBox="0 0 289.64 289.64" version="1.1">
+  <g id="layer1" transform="translate(-152.32 -338.97)">
+    <g id="g3847" transform="matrix(.61531 0 0 .61531 409.64 504.44)">
+      <rect id="rect3708" rx="24.378" ry="24.378" height="470.73" width="470.73" y="-268.92" x="-418.2" fill="#036"/>
+      <g id="g3710" transform="matrix(.93343 0 0 .99574 -506.73 -410.49)" fill="#eee">
+        <path id="path2908" transform="translate(1.4286 -1.4286)" d="m276.28 279.85c0 17.155-13.907 31.062-31.062 31.062s-31.062-13.907-31.062-31.062 13.907-31.062 31.062-31.062 31.062 13.907 31.062 31.062z"/>
+        <rect id="rect2912" transform="rotate(-46.834)" rx="8.4027" ry="8.4374" height="132.33" width="59.052" y="407.51" x="-60.716"/>
+        <rect id="rect2914" transform="rotate(-43.388)" rx="8.4353" ry="8.4047" height="80" width="26.429" y="363.82" x="-128.07"/>
+        <rect id="rect2920" ry="8.4502" rx="8.3912" transform="matrix(-.67101 .74145 -.74746 -.66430 0 0)" height="81.237" width="26.811" y="-487.41" x="-71.902"/>
+        <rect id="rect3694" ry="8.4066" rx="8.4087" transform="matrix(.69576 .71827 -.69297 .72097 0 0)" height="110.11" width="36.371" y="-22.955" x="545.58"/>
+        <rect id="rect3698" transform="rotate(-45)" rx="8.3058" ry="8.3059" height="28.571" width="57.143" y="410.64" x="-109.03"/>
+        <rect id="rect3700" transform="rotate(-47.197)" rx="8.3468" ry="8.3876" height="30.714" width="49.286" y="406.76" x=".22562"/>
+        <rect id="rect3702" transform="rotate(-45.533)" rx="8.4145" ry="8.4246" height="132.86" width="35" y="590.72" x="-27.4"/>
+        <rect id="rect3704" transform="rotate(-83.261)" rx="8.1672" ry="8.6969" height="72.857" width="30.714" y="413.13" x="-450.83"/>
+      </g>
+    </g>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>running pictogram</dc:title>
+        <dc:date>2010-08-04T12:55:11</dc:date>
+        <dc:description>Separate entries of sport pictogram from my set</dc:description>
+        <dc:source>http://openclipart.org/detail/77317/running-pictogram-by-shokunin</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>shokunin</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>box</rdf:li>
+            <rdf:li>boxing</rdf:li>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>fence</rdf:li>
+            <rdf:li>gym</rdf:li>
+            <rdf:li>gymnastics</rdf:li>
+            <rdf:li>jump</rdf:li>
+            <rdf:li>jumping</rdf:li>
+            <rdf:li>lifting</rdf:li>
+            <rdf:li>man</rdf:li>
+            <rdf:li>pictogram</rdf:li>
+            <rdf:li>run</rdf:li>
+            <rdf:li>running</rdf:li>
+            <rdf:li>silhouette</rdf:li>
+            <rdf:li>sports</rdf:li>
+            <rdf:li>sports2010</rdf:li>
+            <rdf:li>weight</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

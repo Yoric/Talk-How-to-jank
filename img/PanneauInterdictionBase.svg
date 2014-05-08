@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg2" height="297mm" width="210mm" version="1.1">
+  <g id="layer1" stroke="#f00">
+    <path id="path3315" stroke-width="54.107" transform="matrix(.92715 0 0 .92105 -777.96 119.85)" fill="#fff" d="m1440 432.36a215.71 217.14 0 1 1 -431.43 0 215.71 217.14 0 1 1 431.43 0z"/>
+    <path id="path4089" stroke-width="50" fill="#f00" d="m211.43 395.22 297.14 260"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Panneau interdit / forbidden road sign basic</dc:title>
+        <dc:date>2011-07-02T10:36:22</dc:date>
+        <dc:description>Panneau d'interdiction avec fond blanc.\nLa barre diagonale est un objet à part permettant de mettre n'importe quoi dessous.\nCustomisable forbidden road sign. You can move the slash to put anything else behind.</dc:description>
+        <dc:source>http://openclipart.org/detail/147961/panneau-interdit--forbidden-road-sign-basic-by-magicvince</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>magicvince</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>forbidden</rdf:li>
+            <rdf:li>interdiction</rdf:li>
+            <rdf:li>interdit</rdf:li>
+            <rdf:li>panneau</rdf:li>
+            <rdf:li>road sign</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

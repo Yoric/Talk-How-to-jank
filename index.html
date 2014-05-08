@@ -84,7 +84,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="teaser:jank" class="slide"><div>
+  <div id="teaser_jank" class="slide"><div>
     <section>
       <header>
         <h2>About jank</h2>
@@ -140,7 +140,7 @@ from a high-level overview of browser architectures, we will see how we can best
 
 <!-- FIXME: Nice animation before and after -->
 
-  <div id="section:browser" class="slide cover w"><div>
+  <div id="section_browser" class="slide cover w"><div>
     <section>
       <header>
         <h2>1. Know your enemy</h2>
@@ -159,7 +159,7 @@ from a high-level overview of browser architectures, we will see how we can best
   </div></div>
 
 
-  <div id="browser:loop" class="slide"><div>
+  <div id="browser_loop" class="slide"><div>
     <section>
       <header>
         <h2>This is a browser</h2>
@@ -178,7 +178,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="warmup:howto" class="slide cover h"><div>
+  <div id="warmup_howto" class="slide cover h"><div>
     <section>
       <header>
         <h2>2. Do too much too often</h2>
@@ -198,7 +198,7 @@ from a high-level overview of browser architectures, we will see how we can best
   </div></div>
 
 
-  <div id="warmup:requestAnimationFrame" class="slide"><div>
+  <div id="warmup_requestAnimationFrame" class="slide"><div>
     <section>
       <header>
         <h2>Setup</h2>
@@ -217,7 +217,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>  
 
-  <div id="warmup:requestAnimationFrame:loop" class="slide"><div>
+  <div id="warmup_requestAnimationFrame:loop" class="slide"><div>
     <section>
       <header>
         <h2>Running to completion</h2>
@@ -237,7 +237,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="warmup:mouse" class="slide"><div>
+  <div id="warmup_mouse" class="slide"><div>
     <section>
       <header>
         <h2>Beyond 60fps... not</h2>
@@ -256,7 +256,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="warmupetc" class="slide"><div>
+  <div id="warmup_etc" class="slide"><div>
     <section>
       <header>
         <h2>Variants</h2>
@@ -279,7 +279,7 @@ from a high-level overview of browser architectures, we will see how we can best
 
 <!-- FIXME: Result -->
 
-  <div id="layout:howto" class="slide cover h"><div>
+  <div id="layout_howto" class="slide cover h"><div>
     <section>
       <header>
         <h2>3. Layout and Multiply</h2>
@@ -299,7 +299,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="layout:trash" class="slide"><div>
+  <div id="layout_trash" class="slide"><div>
     <section>
       <header>
         <h2>Thrashing layout</h2>
@@ -324,7 +324,7 @@ from a high-level overview of browser architectures, we will see how we can best
 
 <!-- FIXME: Result -->
 
-  <div id="renderer:howto" class="slide cover h"><div>
+  <div id="renderer_howto" class="slide cover h"><div>
     <section>
       <header>
         <h2>4. Enter the mind of the renderer</h2>
@@ -342,7 +342,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="renderer:scrolling" class="slide"><div>
+  <div id="renderer_scrolling" class="slide"><div>
     <section>
       <header>
         <h2>Reinventing scrolling</h2>
@@ -352,7 +352,7 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>var i = 0;</code>
       <code> </code>
       <code>requestAnimationFrame(function loop() {</code>
-      <code>   element.stype.top = i * 5 + "px";</code>
+      <code>  element.stype.top = i++ * 5 + "px";</code>
       <code> </code>
       <code>  requestAnimationFrame(loop);</code>
       <code>});</code>
@@ -363,7 +363,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>  
 
-  <div id="renderer:z-index" class="slide"><div>
+  <div id="renderer_z-index" class="slide"><div>
     <section>
       <header>
         <h2>Reinterpreting layers</h2>
@@ -381,7 +381,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="renderer:repaints" class="slide"><div>
+  <div id="renderer_repaints" class="slide"><div>
     <section>
       <header>
         <h2>Forcing large repaints</h2>
@@ -401,7 +401,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="section:io" class="slide cover h"><div>
+  <div id="section_io" class="slide cover h"><div>
     <section>
       <header>
         <h2>5. Waiting is an art</h2>
@@ -420,22 +420,32 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="io:storage" class="slide"><div>
+  <div id="io_storage" class="slide"><div>
     <section>
       <header>
         <h2>Synchronous disk I/O</h2>
       </header>
       <pre>
-      <code>localStorage.getItem("foo");</code>
+      <ul class="inner nobull">
+      <li class="active">
+      <code>var item = localStorage.getItem("foo");</code>
       <code>  // Yes, it's that simple</code>
-      </pre>
+      </li>
+      <li>
+      <code> </code>
+      <code>var data = JSON.stringify(item);</code>
+      <code>  // Secondary cost</code>
+      </li>
+      </ul>
+      </pre>      
       <footer class="notes">
       It's even worse in a loop, of course.
       </footer>
     </section>
   </div></div>
 
-  <div id="io:image" class="slide"><div>
+
+  <div id="io_image" class="slide"><div>
     <section>
       <header>
         <h2>I/O in layout</h2>
@@ -458,7 +468,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="section:more" class="slide cover h"><div>
+  <div id="section_more" class="slide cover h"><div>
     <section>
       <header>
         <h2>6. Want some more?</h2>
@@ -490,7 +500,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
-  <div id="section:future" class="slide cover h"><div>
+  <div id="section_future" class="slide cover h"><div>
     <section>
       <header>
         <h2>7. The Future is Coming</h2>
@@ -563,7 +573,7 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>  
 
-  <div id="section:conclusions" class="slide cover h"><div>
+  <div id="section_conclusions" class="slide cover h"><div>
     <section>
       <header>
         <h2>Where do we go from here?</h2>

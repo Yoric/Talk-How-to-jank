@@ -89,10 +89,10 @@ from a high-level overview of browser architectures, we will see how we can best
       <header>
         <h2>About jank</h2>
       </header>
-      <table>
+      <table style="border-spacing:5px">
         <tr>
           <td>
-          16ms- (sustained)
+          16ms- (sustained) &nbsp;&nbsp;&nbsp;&nbsp;
           </td>
           <td>
           Smooth
@@ -124,7 +124,7 @@ from a high-level overview of browser architectures, we will see how we can best
         </tr>
         <tr>
           <td>
-          10m+ (single)
+          10s+ (single)
           </td>
           <td>
           Stopped responding
@@ -584,12 +584,13 @@ from a high-level overview of browser architectures, we will see how we can best
       <header>
         <h2>How to jank</h2>
       </header>
-      <ul>
-      <li>Know the browser</li>
-      <li>Understand how to abuse the model</li>
-      <li>Many frameworks will do the (bad) work for you</li>
-      <li>Discuss with browser developers!</li>
-      </ul>
+      <ol class="inner">
+      <li class="active">Know the browser.</li>
+      <li class="active">Understand how to (ab)use the model.</li>
+      <li class="active">Many frameworks will do jank for you.</li>
+      <li class="active">Maximize jank by carefully monitoring the profiler, the timeline, the box repainter.</li>      
+      <li style="list-style-type:none"> Or discuss with browser evangelists!</li>
+      </ol>
       <footer class="notes">
       </footer>
     </section>

@@ -679,6 +679,10 @@ ul.inline li:last-child::after {
 	bottom: 15px;
 }
 
+table {
+	border-spacing: 5px;
+}
+
 /* Live demos */
 
 * [contenteditable] {

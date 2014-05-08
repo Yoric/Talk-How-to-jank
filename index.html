@@ -34,7 +34,7 @@
     <p>This slide deck is using the shower system - roll over the previews to see the notes and click any slide to go into presentation mode. Then use keys to navigate. <button onclick="goFullScreen()">Go fullscreen</button></p>
     <p class="abstract">
       <strong>Abstract: </strong>
-       In the past few years, it has become fashionable to write jank-free web applications that behave smoothly and do not cause users to disconnect
+       In the past few years, it has become fashionable to write jank-free web applications that behave smoothly, even on small devices, and do not cause users to disconnect
 immediately, believing that something is broken. Certainly, this is a fad. In this presentation, we will take the opposite approach. Starting
 from a high-level overview of browser architectures, we will see how we can best design the client side of a web application to maximize jank and ensure that any web browser chokes on it.
   </aside>
@@ -89,9 +89,9 @@ from a high-level overview of browser architectures, we will see how we can best
       <header>
         <h2>About jank</h2>
       </header>
-      <canvas id="canvas" class="middle" style="z-index:-10">
+      <canvas id="canvas" class="ontheright" style="z-index:-10">
       </canvas>
-      <table class="highlight-row" style="border-spacing:5px;float:left">
+      <table class="highlight-row vertcenter" style="border-spacing:5px;float:left">
         <tr id="row-smooth">
           <td>
           16ms- (sustained) &nbsp;&nbsp;&nbsp;&nbsp; <!--No time to understand how the default classes have been customized -->
@@ -266,9 +266,7 @@ from a high-level overview of browser architectures, we will see how we can best
       What else can slow down the loop?
       <ul class="inner">
       <li class="active">a call to alert()?</li>
-      <li>synchronous network I/O?</li>
-      <li>synchronous disk I/O?</li>
-      <li>synchronous GPU I/O?</li>
+      <li>synchronous I/O (network, disk, GPU)?</li>
       <li>allocating memory?</li>
       <li>thrashing the layout?</li>
       </ul>
@@ -311,8 +309,8 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>var el2 = document.getElementById("div2");</code>
       <code> </code>
       <code>requestAnimationFrame(function loop() {</code>
-      <code>  el2.style.left = getX(el1) + 5 + "px";</code>
-      <code>  el2.style.top = getY(el1) + 5 + "px";</code>
+      <code>  el2.style.left = el1.offsetLeft + 5 + "px"; // Almost</code>
+      <code>  el2.style.top  = el1.offsetTop  + 5 + "px";</code>
       <code> </code>
       <code>  requestAnimationFrame(loop);</code>
       <code>});</code>
@@ -333,7 +331,7 @@ from a high-level overview of browser architectures, we will see how we can best
       </header>
       <img src="img/cinema-penguin.svg" 
            class="middle shadow frame" 
-           alt="ussr calculator">
+           alt="A Penguin at the movies">
       <small class="credits">
         <a href="http://openclipart.org/people/Moini/cinema-penguin.svg">
           Image by Moini
@@ -360,7 +358,9 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>});</code>
       </pre>
       <footer class="notes">
-      Seen with frameworks.
+      Two errors here: 1/ assume that the browser calls you regularly, which is not the case (e.g. garbage-collection), hence jank;
+      2/ with pure CSS transitions/animations, the layout manager could organize the model to communicate directly with the GPU. We
+      lose this property, which costs ~0ms. We lose this property. Seen with frameworks.
       </footer>
     </section>
   </div></div>  
@@ -378,6 +378,8 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>&lt;div style="z-index:2"&gt;&lt;/div&gt;</code>
       </pre>
       <footer class="notes">
+      Here, the layout manager organizes the data in three layers, one per z-index. This should let it communicate directly with
+      the GPU. However, layer 2 messes with this model.
       Seen with framework widgets.
       </footer>
     </section>
@@ -398,7 +400,8 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>el2.textContent = 'bar';</code>
       </pre>
       <footer class="notes">
-      The entire screen is repainted. Seen with internationalization libraries.
+      Change something on the top left? Change something on the bottom right? Alternatively, scroll everything except the top left and the top right?
+      The entire screen is repainted. Seen with internationalization libraries, frameworks, paralax, etc. Can be somewhat avoided by going 3d (translateZ), by the way.
       </footer>
     </section>
   </div></div>
@@ -417,7 +420,7 @@ from a high-level overview of browser architectures, we will see how we can best
         </a>
       </small>
       <footer class="notes">
-      This talk is not about optimizing your web application. It is about knowing how a browser works, and the weaknesses that will bring any browser to its knees. This is about things that cannot be optimized, no matter how many year·man of work we put in them.
+
       </footer>
     </section>
   </div></div>
@@ -441,7 +444,10 @@ from a high-level overview of browser architectures, we will see how we can best
       </ul>
       </pre>      
       <footer class="notes">
-      It's even worse in a loop, of course.
+      By specification, localStorage requires synchronous disk I/O. There are several strategies to implement this,
+      but it means that at some point, you need to wait for a full disk I/O before proceeding with your code. In edge
+      cases, this can last several seconds and possibly block the entire OS. Similarly, JSON [de]serialization can
+      be extremely slow and blocking and cannot be much optimized.
       </footer>
     </section>
   </div></div>
@@ -454,18 +460,19 @@ from a high-level overview of browser architectures, we will see how we can best
       </header>
       <pre>
       <code>var context = document.getElementById("canvas").</code>
-      <code>   getContext("2d");</code>
+      <code>  getContext("2d");</code>
       <code> </code>
       <code>requestAnimationFrame(function loop() {</code>
-      <code>   var image = new Image();</code>
-      <code>   image.src = "http://...";</code>
-      <code>   context.drawImage(image, 0, 0);</code>
+      <code>  var image = new Image();</code>
+      <code>  image.src = "http://...";</code>
+      <code>  context.drawImage(image, 0, 0);</code>
       <code> </code>
       <code>  requestAnimationFrame(loop);</code>
       <code>});</code>
       </pre>
       <footer class="notes">
-      This is one of the ways to force the layout to depend on the network stack. Fun ensues. How many net (or disk) roundtrips can you do in 60fps? Not many.
+      This is one of the ways to force the layout to depend on the network stack.
+      Fun ensues. How many net (or disk) roundtrips can you do in 60fps? Not many.
       </footer>
     </section>
   </div></div>
@@ -492,8 +499,8 @@ from a high-level overview of browser architectures, we will see how we can best
         <h2>More</h2>
       </header>
       <ul>
-      <li>multiplying requests;</li>
-      <li>waiting too long;</li>
+      <li>multiplying requests to resources;</li>
+      <li>waiting for too many resources;</li>
       <li>hoarding resources (nodes, frames, strings, data);</li>
       <li>etc.</li>
       </ul>
@@ -528,6 +535,7 @@ from a high-level overview of browser architectures, we will see how we can best
       <li>Promise + Generators;</li>
       <li>Workers for all;</li>
       <li>Sandboxed iframes for all;</li>
+      <li>Servo?</li>
       <li>etc.</li>
       </ul>
       <footer class="notes">
@@ -535,11 +543,28 @@ from a high-level overview of browser architectures, we will see how we can best
     </section>
   </div></div>
 
+  <div id="async_promise" class="slide"><div>
+    <section>
+      <header>
+        <h2>Promise + Generators</h2>
+      </header>
+      <pre>
+      <code>Task.async(function*() { </code>
+      <code>  for (var i = 0; i &lt; 10000; ++i) {</code>
+      <code>    yield doSomething();</code>
+      <code>  }</code>
+      <code>});</code>
+      </pre>
+      <footer class="notes">
+      Welcome to lightweight [pseudo-]concurrency. Very useful. But when are frames displayed?
+      </footer>
+    </section>
+  </div></div>  
 
   <div id="async_main" class="slide"><div>
     <section>
       <header>
-        <h2>Ideal main thread</h2>
+        <h2>Working with workers (maybe)</h2>
       </header>
       <pre>
       <code>myElement.addEventListener("mousemove", e => {</code>
@@ -549,7 +574,7 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>    buttons: e.buttons</code>
       <code>  };</code>
       <code>  myWorker.postMessage(msg);</code>
-      <code>);</code>
+      <code>});</code>
       </pre>
       <footer class="notes">
       Let's assume for a moment that this works. Replace a worker with a out-of-process iframe as needed. Death by DOM messages. Death by postMessage.
@@ -570,7 +595,7 @@ from a high-level overview of browser architectures, we will see how we can best
       <code>);</code>
       </pre>
       <footer class="notes">
-      And if the back messages are too long, another death by postMessage.
+      And if the back messages are too long, another death by postMessage. We are experiencing this in extreme cases in the source code of Firefox.
       </footer>
     </section>
   </div></div>  
@@ -598,13 +623,13 @@ from a high-level overview of browser architectures, we will see how we can best
       </header>
       <ol class="inner">
       <li class="active">Know the browser.</li>
-      <li class="active">Force synchronous operations.</li>
-      <li class="active">Understand how to (ab)use the model.</li>
-      <li class="active">Many frameworks will do jank for you.</li>
-      <li class="active">Maximize jank by carefully monitoring the profiler, the timeline, the box repainter.</li>      
-      <li style="list-style-type:none"> Or discuss with browser evangelists!</li>
+      <li class="active">Key techniques: de-optimize, wait synchronously.</li>
+      <li class="active">Key tools: profiler, timeline, the box repainter.</li>
+      <li>Many frameworks will do jank for you.</li>
+      <li>Resources: jankfree.org, irc.mozilla.org, ask.mozilla.org.</li>
       </ol>
       <footer class="notes">
+      Always bench!
       </footer>
     </section>
   </div></div>  
@@ -618,7 +643,8 @@ from a high-level overview of browser architectures, we will see how we can best
       <ul class="nobull">
         <li>David Rajchenbach-Teller (Yoric)</li>
         <li>Mozilla, Performance Team</li>
-        <li>ImYoric <a href="http://twitter.com/">@twitter</a></li>
+        <li>Yoric <a href="http://client00.chat.mibbit.com/?server=irc.mozilla.org&channel=%23introduction">@irc.mozilla.org</a></li>
+        <li>ImYoric <a href="http://twitter.com/ImYoric">@twitter</a></li>
         <li><strong>Slides</strong>: http://yoric.github.io/Talk-How-to-jank/</li>
       </ul>
       <small class="credits">

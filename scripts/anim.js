@@ -14,6 +14,7 @@ var context = canvas.getContext("2d");
 window.Animation = {
   startTimeStamp: null,
   _stopped: false,
+  _timeout: null,
   start: function(inject) {
     this._stopped = false;
     this.startTimeStamp = Date.now();
@@ -23,7 +24,7 @@ window.Animation = {
       }
       var wait = inject(canvas, width, height, window.Animation.startTimeStamp) || 0;
       if (wait > 0) {
-        window.setTimeout(() => requestAnimationFrame(loop), wait);
+        window.Animation.timeout = window.setTimeout(() => requestAnimationFrame(loop), wait);
       } else {
         requestAnimationFrame(loop);
       }
@@ -31,6 +32,8 @@ window.Animation = {
   },
   stop: function() {
     this._stopped = true;
+    window.clearTimeout(this._timeout);
+    this._timeout = null;
   },
   addEventListener: function(event, listener) {
     if (event != "resize") {
@@ -58,6 +61,9 @@ var onresize = function() {
   var elt = document.getElementById("teaser_jank");
   width = Math.min(window.innerWidth, elt.clientWidth);
   height = Math.min(window.innerHeight, elt.clientHeight);
+  var min = Math.min(width, height);
+  width = min;
+  height = min;
   canvas.width = width;
   canvas.height = height;
 };
@@ -114,10 +120,12 @@ function makePainter(initialWaitFor, waitAfter, waitFor) {
   var latestWait = 0;
   return function paint(canvas, w, h, t0) {
 
+    context.fillStyle = "lightgray";
+    context.fillRect(0, 0, width, height);
+
     var now = Date.now();
 
     if (initialWaitFor) {
-      console.log("Initial wait for", initialWaitFor);
       latestWait = now;
       var result = initialWaitFor;
       initialWaitFor = 0;
@@ -125,10 +133,7 @@ function makePainter(initialWaitFor, waitAfter, waitFor) {
     }
 
     context.save();
-    context.fillStyle = "white";
-    context.fillRect(0, 0, width, height);
-
-    var scale = Images.scale;
+    var scale = Images.scale * 0.9;
     context.translate(w / 2, h / 2);
     context.scale(scale, scale);
 

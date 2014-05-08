@@ -760,5 +760,25 @@ table {
 }
 .highlight-row tr:hover {
 	background-color:#C0C0B9;
+}
 
+.ontheright {
+	position:absolute;
+	top:50%;
+	left:90%;
+	-webkit-transform:translate(-90%, -50%);
+	-moz-transform:translate(-90%, -50%);
+	-ms-transform:translate(-90%, -50%);
+	-o-transform:translate(-90%, -50%);
+	transform:translate(-100%, -50%);
+}
+
+.vertcenter {
+	position:absolute;
+	top:50%;
+	-webkit-transform:translate(0, -50%);
+	-moz-transform:translate(0, -50%);
+	-ms-transform:translate(0, -50%);
+	-o-transform:translate(0, -50%);
+	transform:translate(0, -50%);
 }

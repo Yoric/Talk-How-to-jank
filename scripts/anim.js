@@ -46,7 +46,7 @@ window.Animation = {
       listener(event);
     }
   },
-  _eventListeners: [],
+  _eventListeners: []
 };
 
 
